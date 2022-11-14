@@ -1,41 +1,17 @@
 import Card from "./components/Card";
 import Header from "./components/Header";
 import Drawer from "./components/Drawer";
-
-const arr = [
-    {
-        name: 'Мужчкие кроссовки Nike Blazer Mid Suede',
-        price: 12999,
-        imageURL: 'img/sneakers/1.jpg'
-    }, {
-        name: 'Мужчкие кроссовки Nike Air Max 270',
-        price: 15609,
-        imageURL: 'img/sneakers/2.jpg'
-    }, {
-        name: 'Мужчкие кроссовки Nike Air Max 590',
-        price: 11541,
-        imageURL: 'img/sneakers/3.jpg'
-    }, {
-        name: 'Reebok Answer 4 54 Points',
-        price: 13300,
-        imageURL: 'img/sneakers/4.jpg'
-    }, {
-        name: 'Reebok Answer 4 Step Over 2021',
-        price: 17500,
-        imageURL: 'img/sneakers/5.jpg'
-    }, {
-        name: 'Nike LeBron 20 The Debut',
-        price: 26250,
-        imageURL: 'img/sneakers/6.jpg'
-    },
-];
+import React from "react";
 
 
 function App() {
+    const [items, setItems] = React.useState([]);
+    const [cartOpened, setCartOpened] = React.useState(false);
+
     return (
         <div className="wrapper clear">
-            <Drawer/>
-            <Header/>
+            {cartOpened &&  <Drawer onClose={()=> setCartOpened(false)}/>}
+            <Header onClickCart={()=> setCartOpened(true)}/>
             <div className="content p-40">
                 <div className="d-flex align-center justify-between mb-40">
                     <h1 className="mb-40">Все кроссовки</h1>
@@ -46,10 +22,12 @@ function App() {
                 </div>
                 <div className="cardList">
                     {
-                        arr.map(obj => (
+                        items.map(obj => (
                             <Card title={obj.name}
                                   price={obj.price}
-                                  imageURL={obj.imageURL}/>
+                                  imageURL={obj.imageURL}
+                                  onFavorite={() => console.log('Add to favorite')}
+                                  onPlus={() => console.log('Add to cart')}/>
                         ))
                     }
                 </div>
