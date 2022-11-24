@@ -6,12 +6,26 @@ import React from "react";
 
 function App() {
     const [items, setItems] = React.useState([]);
+    const [cartItems, setCarttems] = React.useState([]);
     const [cartOpened, setCartOpened] = React.useState(false);
+
+    React.useEffect(() => {
+        fetch('https://63727a48348e947299f698e2.mockapi.io/items').then(res => {
+            return res.json();
+        }).then(json => {
+            setItems(json)
+        });
+    }, []);
+
+    const onAddToCart = (obj) => {
+        alert(obj.title)
+    }
+
 
     return (
         <div className="wrapper clear">
-            {cartOpened &&  <Drawer onClose={()=> setCartOpened(false)}/>}
-            <Header onClickCart={()=> setCartOpened(true)}/>
+            {cartOpened && <Drawer items={cartItems} onClose={() => setCartOpened(false)}/>}
+            <Header onClickCart={() => setCartOpened(true)}/>
             <div className="content p-40">
                 <div className="d-flex align-center justify-between mb-40">
                     <h1 className="mb-40">Все кроссовки</h1>
@@ -22,12 +36,13 @@ function App() {
                 </div>
                 <div className="cardList">
                     {
-                        items.map(obj => (
-                            <Card title={obj.name}
-                                  price={obj.price}
-                                  imageURL={obj.imageURL}
+                        items.map((item, index) => (
+                            <Card key={index}
+                                title={item.name}
+                                  price={item.price}
+                                  imageURL={item.imageURL}
                                   onFavorite={() => console.log('Add to favorite')}
-                                  onPlus={() => console.log('Add to cart')}/>
+                                  onPlus={(obj) => onAddToCart(obj)}/>
                         ))
                     }
                 </div>

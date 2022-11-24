@@ -1,49 +1,31 @@
 import styles from './Drawer.module.scss'
 
-function Drawer(props) {
+function Drawer({ onClose, items = []}) {
     return (
         <aside className={styles.overlay}>
             <div className={styles.drawer}>
                 <h2 className="mb-30 d-flex justify-between">
                     <span>Корзина</span>
-                    <button className="removeBtn" onClick={props.onClose}>
+                    <button className="removeBtn" onClick={onClose}>
                         <img src="/img/btn-remove.svg" alt="close"/>
                     </button>
                 </h2>
                 <div className={styles.items}>
-                    <div className="cartItem d-flex align-center mb-20">
-                        <div style={{backgroundImage: 'url(/img/sneakers/1.jpg)'}}
-                             className="cardItemImg"></div>
-                        <div className="mr-20">
-                            <p className="mb-5">Мужчкие кроссовки Nike Blazer Mid Suede</p>
-                            <b>12 999 руб.</b>
-                        </div>
-                        <button className="removeBtn">
-                            <img src="/img/btn-remove.svg" alt="remove"/>
-                        </button>
-                    </div>
-                    <div className="cartItem d-flex align-center mb-20">
-                        <div style={{backgroundImage: 'url(/img/sneakers/2.jpg)'}}
-                             className="cardItemImg"></div>
-                        <div className="mr-20">
-                            <p className="mb-5">Мужчкие кроссовки Nike Blazer Mid Suede</p>
-                            <b>12 999 руб.</b>
-                        </div>
-                        <button className="removeBtn">
-                            <img src="/img/btn-remove.svg" alt="remove"/>
-                        </button>
-                    </div>
-                    <div className="cartItem d-flex align-center mb-20">
-                        <div style={{backgroundImage: 'url(/img/sneakers/3.jpg)'}}
-                             className="cardItemImg"></div>
-                        <div className="mr-20">
-                            <p className="mb-5">Мужчкие кроссовки Nike Blazer Mid Suede</p>
-                            <b>12 999 руб.</b>
-                        </div>
-                        <button className="removeBtn">
-                            <img src="/img/btn-remove.svg" alt="remove"/>
-                        </button>
-                    </div>
+                    {
+                        items.map((obj) => (
+                            <div className="cartItem d-flex align-center mb-20">
+                                <div style={{backgroundImage: `url(${obj.imageURL}`}}
+                                     className="cardItemImg"></div>
+                                <div className="mr-20">
+                                    <p className="mb-5">{obj.name}</p>
+                                    <b>{obj.price} руб.</b>
+                                </div>
+                                <button className="removeBtn">
+                                    <img src="/img/btn-remove.svg" alt="remove"/>
+                                </button>
+                            </div>
+                        ))
+                    }
                 </div>
                 <div className="cartTotalBlock">
                     <ul>
